@@ -13,8 +13,24 @@ app.use(cors())
 
 //  POST
 
-app.post('/contacts', (req, res) => {
+app.post('/contacts', async (req, res) => {
 
+    const {
+        name,
+        email,
+        phone
+    } = req.body
+
+    const contact = await prisma.contact.create({
+        data: {
+            name,
+            email,
+            phone
+        }
+    })
+
+    res.status(200)
+    res.json([{message: "Sucesso ao criar"}, contact])
 })
 
 

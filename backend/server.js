@@ -30,7 +30,7 @@ app.post('/contacts', async (req, res) => {
     })
 
     res.status(200)
-    res.json([{message: "Sucesso ao criar"}, createdContact])
+    res.json([{message: "Sucesso ao criar contato"}, createdContact])
 })
 
 
@@ -65,9 +65,28 @@ app.delete('/contacts/:id', async (req, res) => {
 
 // PUT
 
-app.put('/contacts', (req, res) => {
+app.put('/contacts/:id', async (req, res) => {
 
-    
+    const { id } = req.params
+    const {
+        name,
+        email,
+        phone
+    } = req.body
+
+    const updatedUser = await prisma.contact.update({
+        where: {
+            id
+        },
+        data: {
+            name,
+            email,
+            phone
+        }
+    })
+
+    res.status(200)
+    res.json([{message: "Contacto atualizado com sucesso!"}, updatedUser])    
 })
 
 

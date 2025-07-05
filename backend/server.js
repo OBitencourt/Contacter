@@ -21,7 +21,7 @@ app.post('/contacts', async (req, res) => {
         phone
     } = req.body
 
-    const contact = await prisma.contact.create({
+    const createdContact = await prisma.contact.create({
         data: {
             name,
             email,
@@ -30,7 +30,7 @@ app.post('/contacts', async (req, res) => {
     })
 
     res.status(200)
-    res.json([{message: "Sucesso ao criar"}, contact])
+    res.json([{message: "Sucesso ao criar"}, createdContact])
 })
 
 
@@ -47,7 +47,18 @@ app.get('/contacts', async (req, res) => {
 
 // DELETE
 
-app.delete('/contacts', (req, res) => {
+app.delete('/contacts/:id', async (req, res) => {
+
+    const { id } = req.params
+
+    const deletedContact = await prisma.contact.delete({
+        where: {
+            id
+        }
+    })
+
+    res.status(200)
+    res.json([{message: "Contato deletado com sucesso!"}, deletedContact])
 
     
 })

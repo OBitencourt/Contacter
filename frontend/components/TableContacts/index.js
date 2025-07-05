@@ -32,6 +32,7 @@ const TableContacts = () => {
           <TableHead className="w-[100px]">Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Phone Number</TableHead>
+          <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -40,7 +41,7 @@ const TableContacts = () => {
             <TableCell className="font-medium">{invoice.name}</TableCell>
             <TableCell>{invoice.email}</TableCell>
             <TableCell>{invoice.phone}</TableCell>
-            <TableCell>
+            <TableCell style={{display: 'flex', gap: '12px'}}>
                 <Button variant="outline" size="icon">
                     <Image
                         src="/images/edit-icon.svg"
@@ -49,8 +50,6 @@ const TableContacts = () => {
                         height={20}
                     />
                 </Button>
-            </TableCell>
-            <TableCell>
                 <Button variant="destructive" size="icon">
                     <Image
                         src="/images/trash-icon.svg"

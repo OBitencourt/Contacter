@@ -1,18 +1,15 @@
-// import Image from "next/image";
 
-import { Button } from "@/components/ui/button"
+import TableContacts from '@/components/TableContacts'
 
 
 const Home = () => {
 
   return (
     <>
-      Olá, está funcionando
-      Botão shadcn:
-      <br />
-      <Button>
-        Botão
-      </Button>
+      <div style={{height: '100dvh', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '30%', margin: '0 auto'}}>
+        <TableContacts />
+
+      </div>
     </>
   )
 }

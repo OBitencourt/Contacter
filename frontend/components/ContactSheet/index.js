@@ -30,9 +30,9 @@ const ContactSheet = () => {
 
           <div className="grid gap-3">
 
-            <Label htmlFor="sheet-demo-name">Name</Label>
+            <Label htmlFor="name">Name</Label>
             <Input
-                id="sheet-demo-name"
+                id="name"
                 placeholder="Your name"
             />
 
@@ -40,9 +40,9 @@ const ContactSheet = () => {
           
           <div className="grid gap-3">
 
-            <Label htmlFor="sheet-demo-username">Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
-                id="sheet-demo-username"
+                id="email"
                 placeholder="defaultemail@gmail.com"
             />
 
@@ -50,9 +50,9 @@ const ContactSheet = () => {
 
           <div className="grid gap-3">
 
-            <Label htmlFor="sheet-demo-username">Phone</Label>
+            <Label htmlFor="phone">Phone</Label>
             <Input
-                id="sheet-demo-username"
+                id="phone"
                 placeholder="+351 999 999 999"
             />
 

@@ -6,13 +6,39 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+import axios from "axios"
+
+
+const contactSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
+})
+
+
 const ContactSheet = () => {
+
+  const {
+    register,
+    handleSubmit
+    
+  } = useForm({
+    resolver: zodResolver(contactSchema)
+  })
+
+  const handleContactSubmit = (data) => {
+    axios.post('http://localhost:8080/contacts', data).then((response) => {
+      console.log(response)
+    })
+  }
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -26,14 +52,14 @@ const ContactSheet = () => {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid flex-1 auto-rows-min gap-6 px-4">
+        <form onSubmit={handleSubmit(handleContactSubmit)} className="grid flex-1 auto-rows-min gap-6 px-4">
 
           <div className="grid gap-3">
 
             <Label htmlFor="name">Name</Label>
             <Input
-                id="name"
-                placeholder="Your name"
+              placeholder="Your name"
+              {...register('name')}
             />
 
           </div>
@@ -42,8 +68,8 @@ const ContactSheet = () => {
 
             <Label htmlFor="email">Email</Label>
             <Input
-                id="email"
-                placeholder="defaultemail@gmail.com"
+              placeholder="defaultemail@gmail.com"
+              {...register('email')}
             />
 
           </div>
@@ -52,19 +78,19 @@ const ContactSheet = () => {
 
             <Label htmlFor="phone">Phone</Label>
             <Input
-                id="phone"
-                placeholder="+351 999 999 999"
+              placeholder="+351 999 999 999"
+              {...register('phone')}
             />
 
           </div>
-        </div>
+          
+            <Button type="submit">Adicionar</Button>
+            <SheetClose asChild>
+              <Button variant="outline">Close</Button>
+            </SheetClose>
 
-        <SheetFooter>
-          <Button type="submit">Adicionar</Button>
-          <SheetClose asChild>
-            <Button variant="outline">Close</Button>
-          </SheetClose>
-        </SheetFooter>
+        </form>
+
       </SheetContent>
     </Sheet>
   )

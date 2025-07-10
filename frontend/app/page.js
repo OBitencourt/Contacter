@@ -33,16 +33,6 @@ const Home = () => {
     <>
       <div style={{height: '100dvh', display: 'flex', justifyContent: 'center', alignItems: 'center', width: '30%', margin: '0 auto', flexDirection: 'column'}}>
         {
-          /*
-          contacts ? (
-            <TableContacts contacts={isLoading ? "Não foi possível requisitar os contatos" : contacts} />
-          ) : (
-            errorMessage
-          )
-          */
-        }
-
-        {
           isLoading ? (
             <Loading />
           ) : (

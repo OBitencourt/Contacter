@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   Table,
   TableBody,
@@ -8,31 +10,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
-import Image from "next/image";
 
 import {
   Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import axios from "axios";
+import DeleteModal from '@/components/DeleteModal/index.js'
 
 const TableContacts = ({ contacts, message }) => {
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8080/contacts/${id}`).then((response) => {
-      console.log(response)
-    })
-    .catch((err) => {
-      console.log("Não foi possível fazer o delete", err)
-    })
-  }
+
   return (
     <>
       {
@@ -74,20 +62,7 @@ const TableContacts = ({ contacts, message }) => {
                             />
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Delete {contact.name} from your contacts list?</DialogTitle>
-                            <DialogDescription>
-                              Are you sure? This action can not be undone.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <DialogFooter>
-                            <DialogClose asChild>
-                              <Button variant="outline">Cancel</Button>
-                            </DialogClose>
-                            <Button type="destructive" onClick={() => {handleDelete(contact.id)}}>Delete</Button>
-                          </DialogFooter>
-                        </DialogContent>
+                        <DeleteModal id={contact.id} name={contact.name} />
                       </Dialog>
                     </TableCell>
                   </TableRow>

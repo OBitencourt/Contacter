@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Trash, Edit } from 'lucide-react'
+
 import {
   Table,
   TableBody,
@@ -18,14 +20,19 @@ import {
 
 import DeleteModal from '@/components/DeleteModal/index.js'
 
-const TableContacts = ({ contacts, message }) => {
+import { useGetContacts } from "@/src/http/get-contacts"
 
+const TableContacts = () => {
+
+  const { data } = useGetContacts()
+
+  const contacts = data
 
   return (
     <>
       {
-        contacts ? (
-          <Table>
+        contacts && (
+          <Table className="w-[60%]">
             <TableCaption>A list of your contacts.</TableCaption>
             <TableHeader>
               <TableRow>
@@ -44,22 +51,12 @@ const TableContacts = ({ contacts, message }) => {
                     <TableCell>{contact.phone}</TableCell>
                     <TableCell style={{ display: "flex", gap: "12px" }}>
                       <Button variant="outline" size="icon">
-                        <Image
-                          src="/images/edit-icon.svg"
-                          alt="exclude"
-                          width={20}
-                          height={20}
-                        />
+                        <Edit />
                       </Button>
                       <Dialog>
                         <DialogTrigger asChild>
-                          <Button variant="destructive" size="icon">
-                            <Image
-                              src="/images/trash-icon.svg"
-                              alt="exclude"
-                              width={20}
-                              height={20}
-                            />
+                          <Button className="hover:bg-accent" variant="destructive" size="icon">
+                            <Trash />
                           </Button>
                         </DialogTrigger>
                         <DeleteModal id={contact.id} name={contact.name} />
@@ -70,9 +67,6 @@ const TableContacts = ({ contacts, message }) => {
             </TableBody>
           </Table>
         ) 
-        : (
-          message
-        )
       }
     </>
   );

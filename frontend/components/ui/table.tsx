@@ -2,13 +2,13 @@
 
 import * as React from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/src/lib/utils"
 
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative w-full overflow-x-auto"
+      className="relative overflow-x-auto w-max mx-auto"
     >
       <table
         data-slot="table"

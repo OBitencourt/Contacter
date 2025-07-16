@@ -8,18 +8,18 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import axios from "axios";
+import { useDeleteContact } from "@/src/http/delete-contact";
 
 
 const DeleteModal = ({id, name}) => {
 
+
+  const { mutate } = useDeleteContact()
+
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8080/contacts/${id}`).then((response) => {
-      console.log(response)
-    })
-    .catch((err) => {
-      console.log("Não foi possível fazer o delete", err)
-    })
+    mutate(id)
   }
+
     
   return (
     <>
@@ -40,7 +40,7 @@ const DeleteModal = ({id, name}) => {
             <Button
                 type="destructive"
                 onClick={() => {
-                handleDelete(id);
+                  handleDelete(id);
                 }}
             >
                 Delete

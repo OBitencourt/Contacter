@@ -1,11 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-
-type Contact = Array<{
-  id: string
-  name: string
-  email: string
-  phone: string
-}>
+import { Contact } from "./types/get-contacts-type"
 
 export function useGetContacts ()  {
     return useQuery({

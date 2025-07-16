@@ -42,7 +42,7 @@ const ContactSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button style={{alignSelf: 'end'}}>Add Contact</Button>
+        <Button size="sm" className="text-sm w-full mt-8 hover:bg-accent-foreground/80">Add Contact</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

@@ -14,7 +14,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import axios from "axios"
+import { useAddContact } from "@/src/http/use-create-contact"
 
 
 const contactSchema = z.object({
@@ -23,22 +23,38 @@ const contactSchema = z.object({
   phone: z.string(),
 })
 
+type CreateContactFormData = z.infer<typeof contactSchema>
+
 
 const ContactSheet = () => {
+
+  const { mutateAsync: createContact } = useAddContact()
 
   const {
     register,
     handleSubmit
     
   } = useForm({
-    resolver: zodResolver(contactSchema)
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: ''
+    }
   })
 
-  const handleContactSubmit = (data) => {
-    axios.post('http://localhost:8080/contacts', data).then((response) => {
-      console.log(response)
+  const handleContactSubmit = async ({
+    name,
+    email,
+    phone
+  }: CreateContactFormData) => {
+    await createContact({
+      name,
+      email,
+      phone
     })
   }
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -83,8 +99,9 @@ const ContactSheet = () => {
             />
 
           </div>
-          
-            <Button type="submit">Adicionar</Button>
+            <SheetClose asChild>
+              <Button type="submit">Adicionar</Button>
+            </SheetClose>
             <SheetClose asChild>
               <Button variant="outline">Close</Button>
             </SheetClose>

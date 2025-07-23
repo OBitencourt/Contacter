@@ -12,15 +12,16 @@ import {
 } from "@/components/ui/sheet"
 
 import { useForm } from 'react-hook-form'
+import { ErrorMessage } from '@hookform/error-message'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useAddContact } from "@/src/http/use-create-contact"
 
 
 const contactSchema = z.object({
-  name: z.string(),
-  email: z.string(),
-  phone: z.string(),
+  name: z.string().min(1, "Digite um nome para o seu contato."),
+  email: z.string().min(3, "Digite um email para o seu contato."),
+  phone: z.string().min(3, "Digite um telefone para o seu contato."),
 })
 
 type CreateContactFormData = z.infer<typeof contactSchema>
@@ -32,15 +33,16 @@ const ContactSheet = () => {
 
   const {
     register,
-    handleSubmit
-    
+    handleSubmit,
+    formState: { errors }
   } = useForm({
     resolver: zodResolver(contactSchema),
     defaultValues: {
       name: '',
       email: '',
       phone: ''
-    }
+    },
+    criteriaMode: "all"
   })
 
   const handleContactSubmit = async ({
@@ -75,9 +77,13 @@ const ContactSheet = () => {
             <Label htmlFor="name">Name</Label>
             <Input
               placeholder="Your name"
-              {...register('name')}
+              {...register('name', { required: "Digite um nome para o seu contato." })}
             />
-
+            <ErrorMessage 
+              errors={errors}
+              name="name"
+              render={({message}) => <p className="text-sm/tight text-red-400">{message}</p>}
+            />
           </div>
           
           <div className="grid gap-3">
@@ -85,9 +91,13 @@ const ContactSheet = () => {
             <Label htmlFor="email">Email</Label>
             <Input
               placeholder="defaultemail@gmail.com"
-              {...register('email')}
+              {...register('email', { required: "Digite um email para o seu contato."})}
             />
-
+            <ErrorMessage 
+              errors={errors}
+              name="email"
+              render={({message}) => <p className="text-sm/tight text-red-400">{message}</p>}
+            />
           </div>
 
           <div className="grid gap-3">
@@ -95,13 +105,15 @@ const ContactSheet = () => {
             <Label htmlFor="phone">Phone</Label>
             <Input
               placeholder="+351 999 999 999"
-              {...register('phone')}
+              {...register('phone', { required: "Digite um número para o seu contato."})}
             />
-
+            <ErrorMessage 
+              errors={errors}
+              name="phone"
+              render={({message}) => <p className="text-sm/tight text-red-400">{message}</p>}
+            />
           </div>
-            <SheetClose asChild>
-              <Button type="submit">Adicionar</Button>
-            </SheetClose>
+            <Button type="submit">Adicionar</Button>
             <SheetClose asChild>
               <Button variant="outline">Close</Button>
             </SheetClose>
